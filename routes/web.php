@@ -35,6 +35,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/setdiskon', [DiskonController::class, 'index']);
     Route::post('/setdiskon/update/{id}', [DiskonController::class, 'update']);
  
+     //setting profile
+     Route::get('/profile', [UserController::class, 'profile']);
+     Route::post('/profile/update/{id}', [UserController::class, 'updateprofile']);
+  
     
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
