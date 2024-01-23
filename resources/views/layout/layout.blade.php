@@ -46,8 +46,8 @@
                 <a href="index.html">
                     <b class="logo-abbr"><img src="/asset/images/logo.png" alt=""> </b>
                     <span class="logo-compact"><img src="/asset/images/logo-compact.png" alt=""></span>
-                    <span class="brand-title">
-                        <img src="/asset/images/logo-text.png" alt="">
+                    <span class="brand-title-text">
+                        Sistem Kasir
                     </span>
                 </a>
             </div>
@@ -105,8 +105,8 @@
                 <ul class="metismenu" id="menu">
                     <li class="nav-label">Dashboard</li>
                     <li>
-                        <a href="#" aria-expanded="false">
-                            <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
+                        <a href="/home" aria-expanded="false">
+                            <i class="fa fa-home"></i><span class="nav-text">Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-label">UI Components</li>

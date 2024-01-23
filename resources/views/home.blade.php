@@ -14,36 +14,96 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12">
+            <div class="col-4">
+                <div class="card card-widget">
+                    <div class="card-body gradient-3">
+                        <div class="media">
+                            <span class="card-widget__icon"><i class="fa fa-briefcase"></i></span>
+                            <div class="media-body">
+                                <h2 class="card-widget__title">{{ $data_barang_cnt }}</h2>
+                                <h5 class="card-widget__subtitle">Data Barang</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card card-widget">
+                    <div class="card-body gradient-4">
+                        <div class="media">
+                            <span class="card-widget__icon"><i class="fa fa-desktop"></i></span>
+                            <div class="media-body">
+                                <h2 class="card-widget__title">{{ $data_transaksi_cnt }}</h2>
+                                <h5 class="card-widget__subtitle">Data Transaksi</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="card card-widget">
+                    <div class="card-body gradient-9">
+                        <div class="media">
+                            <span class="card-widget__icon"><i class="fa fa-money"></i></span>
+                            <div class="media-body">
+                                <h2 class="card-widget__title">Rp. {{number_format($data_pendapatan_hari_ini)}}</h2>
+                                <h5 class="card-widget__subtitle">Pendapatan Hari Ini</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-8">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Data Table</h4>
+                        <h4 class="card-title">Data Stok Barang Menipis</h4>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered zero-configuration">
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama</th>
-                                        <th>Role</th>
-                                        <th>Action</th>
-
+                                        <th>Nama Barang</th>
+                                        <th>Jenis</th>
+                                        <th>Stok</th>
+                                        <th>Harga</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                    $no = 1;
+                                    @endphp
+                                    @foreach($data_barang as $row)
+
+
                                     <tr>
-                                        <td>1</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>
-                                            <a href="#" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i>Edit</a>
-                                            <a href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>Hapus</a>
-                                        </td>
-
+                                        <td>{{ $no++}}</td>
+                                        <td>{{ $row->nama_barang }}</td>
+                                        <td>{{ $row->nama_jenis }}</td>
+                                        <td>{{ $row->stok }} Pcs</td>
+                                        <td>Rp. {{ number_format($row->harga) }}</td>
                                     </tr>
-
+                                    @endforeach
                                 </tbody>
 
                             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="card card-widget">
+                    <div class="card-body gradient-1">
+                        <div class="media">
+                            <span class="card-widget__icon"><i class="fa fa-money"></i></span>
+                            <div class="media-body">
+                                <h2 class="card-widget__title">Rp. {{number_format($data_seluruh_pendapatan) }}</h2>
+                                <h5 class="card-widget__subtitle">Seluruh Pendapatan</h5>
+                            </div>
                         </div>
                     </div>
                 </div>

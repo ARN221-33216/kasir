@@ -14704,3 +14704,8 @@ html[dir="rtl"] [direction="rtl"][data-sidebar-style="compact"]:not([data-layout
 i.fa {
   padding-right: 10px;
 }
+
+.brand-title-text {
+  color: var(--white);
+  font-weight: bold;
+}
