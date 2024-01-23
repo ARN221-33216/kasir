@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DiskonController;
+use App\Http\Controllers\TransaksiController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/', 'login')->name('login');
@@ -39,7 +40,10 @@ Route::group(['middleware' => 'auth'], function () {
      Route::get('/profile', [UserController::class, 'profile']);
      Route::post('/profile/update/{id}', [UserController::class, 'updateprofile']);
   
-    
+    //Data Transaksi
+    Route::get('/transaksi', [TransaksiController::class, 'index']);
+    Route::get('/transaksi/create', [TransaksiController::class, 'create']);
+ 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 });

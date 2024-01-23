@@ -129,7 +129,7 @@
                     @endif
                     @if (Auth::user()->role === 'kasir')
                     <li>
-                        <a href="#" aria-expanded="false">
+                        <a href="/transaksi" aria-expanded="false">
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Data Transaksi</span>
                         </a>
                     </li>
