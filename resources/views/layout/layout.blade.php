@@ -112,7 +112,7 @@
                     <li class="nav-label">UI Components</li>
                     @if (Auth::user()->role === 'admin')
                     <li>
-                        <a href="#" aria-expanded="false">
+                        <a href="/setdiskon" aria-expanded="false">
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Setting Diskon</span>
                         </a>
                     </li>
