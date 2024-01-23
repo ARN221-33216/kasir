@@ -12,7 +12,7 @@ class AuthController extends Controller
         if (Auth::check()) {
             return redirect()->route('home');
         }
-        return view('index');
+        return view('index', ['title' => 'Login Page']);
     }
 
     public function authenticate(Request $request): RedirectResponse
@@ -25,7 +25,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
  
-            return redirect()->intended('home');
+            return redirect()->intended('home')->with('success', 'Login Berhasil');
         }
  
         return back()->withErrors([
