@@ -183,6 +183,7 @@
     <script src="/asset/plugins/sweetalert/js/sweetalert.min.js"></script>
     <script src="/asset/plugins/sweetalert/js/sweetalert.init.js"></script>
 
+
     @if (session('success'))
     <script>
         swal("{{ session('success') }}", "{{ session('success') }}", "success")
@@ -193,9 +194,10 @@
     @if (session('error'))
     <script>
         swal("{{ session('error') }}", "{{ session('error') }}", "error")
-
     </script>
     @endif
+
+    @stack('script')
 
 </body>
 </html>

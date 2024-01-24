@@ -50,6 +50,7 @@
         </div>
 
         <div class="row">
+            @if (auth()->user()->isAdmin())
             <div class="col-8">
                 <div class="card">
                     <div class="card-body">
@@ -87,6 +88,18 @@
                     </div>
                 </div>
             </div>
+            @else
+            <!-- Single Bar Chart -->
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-body">
+
+                        <canvas id="singelBarChart" width="500" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+            @endif
+
 
             <div class="col-4">
                 <div class="card card-widget">
@@ -104,5 +117,37 @@
         </div>
     </div>
     <!-- #/ container -->
+
 </div>
 @endsection
+
+@push('script')
+<script src="/asset/plugins/chart.js/Chart.bundle.min.js"></script>
+<script>
+    var ctx = document.getElementById("singelBarChart");
+    ctx.height = 150;
+    var myChart = new Chart(ctx, {
+        type: 'bar'
+        , data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nop", "Des"]
+            , datasets: [{
+                label: "Data Transaksi Perbulan dan Tahun Ini"
+                , data: [{{ $stats }}]
+                , borderColor: "rgba(117, 113, 249, 0.9)"
+                , borderWidth: "0"
+                , backgroundColor: "blue"
+            }]
+        }
+        , options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+</script>
+@endpush
