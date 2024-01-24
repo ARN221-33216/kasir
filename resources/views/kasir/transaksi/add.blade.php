@@ -23,14 +23,14 @@
                                 <table class="table table-bordered">
                                     <tr>
                                         <th>No</th>
-                                        <th>Barang></th>
+                                        <th>Barang</th>
                                         <th>Harga</th>
                                         <th>Qty</th>
                                         <th>Subtotal</th>
                                     </tr>
                                     <tr>
                                         <td>No</td>
-                                        <td>Barang></td>
+                                        <td>Barang</td>
                                         <td>Harga</td>
                                         <td>Qty</td>
                                         <td>Subtotal</td>

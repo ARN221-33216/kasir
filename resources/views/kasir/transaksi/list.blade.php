@@ -39,13 +39,13 @@
                                     @endphp
                                     @foreach($data_transaksi as $row)
 
-
                                     <tr>
                                         <td>{{ $no++}}</td>
                                         <td>{{ $row->no_transaksi }}</td>
                                         <td>{{ date('d/M/Y', strtotime($row->tgl_transaksi)) }}</td>
                                         <td>Rp. {{ number_format($row->total_bayar) }}</td>
                                         <td>
+                                            <a href="/transaksi/detail/{{$row->no_transaksi}}" class="btn btn-xs btn-success"><i class="fa fa-list"></i>Detail</a>
                                             <a href="#" target="_blank" class="btn btn-xs btn-primary"><i class="fa fa-print"></i>Cetak</a>
                                         </td>
 

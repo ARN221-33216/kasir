@@ -48,4 +48,5 @@ Route::middleware('role:kasir')->group(function () {
      //Data Transaksi
     Route::get('/transaksi', [TransaksiController::class, 'index']);
     Route::get('/transaksi/create', [TransaksiController::class, 'create']);
+    Route::get('/transaksi/detail/{no_transaksi}', [TransaksiController::class, 'detail']);
 });
