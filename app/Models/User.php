@@ -46,4 +46,9 @@ class User extends Authenticatable
 
     const CREATED_AT = "created_at";
     const UPDATED_AT = "updated_at";
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';  
+    }
 }

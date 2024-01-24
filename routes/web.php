@@ -15,8 +15,15 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/logout', 'logout')->name('logout');
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::middleware('role:admin,kasir')->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+    //setting profile
+    Route::get('/profile', [UserController::class, 'profile']);
+    Route::post('/profile/update/{id}', [UserController::class, 'updateprofile']);
+});
+ 
+Route::middleware('role:admin')->group(function () {
     Route::get('/user', [UserController::class, 'index']);
     Route::post('/user/store', [UserController::class, 'store']);
     Route::post('/user/update/{id}', [UserController::class, 'update']);
@@ -35,16 +42,10 @@ Route::group(['middleware' => 'auth'], function () {
     //setting diskon
     Route::get('/setdiskon', [DiskonController::class, 'index']);
     Route::post('/setdiskon/update/{id}', [DiskonController::class, 'update']);
- 
-     //setting profile
-     Route::get('/profile', [UserController::class, 'profile']);
-     Route::post('/profile/update/{id}', [UserController::class, 'updateprofile']);
-  
-    //Data Transaksi
-    Route::get('/transaksi', [TransaksiController::class, 'index']);
-    Route::get('/transaksi/create', [TransaksiController::class, 'create']);
- 
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-
 });
 
+Route::middleware('role:kasir')->group(function () {
+     //Data Transaksi
+    Route::get('/transaksi', [TransaksiController::class, 'index']);
+    Route::get('/transaksi/create', [TransaksiController::class, 'create']);
+});

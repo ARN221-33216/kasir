@@ -110,7 +110,7 @@
                         </a>
                     </li>
                     <li class="nav-label">UI Components</li>
-                    @if (Auth::user()->role === 'admin')
+                    @if (Auth::user()->isAdmin())
                     <li>
                         <a href="/setdiskon" aria-expanded="false">
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Setting Diskon</span>
@@ -127,14 +127,14 @@
                         </ul>
                     </li>
                     @endif
-                    @if (Auth::user()->role === 'kasir')
+                    @if (!Auth::user()->isAdmin())
                     <li>
                         <a href="/transaksi" aria-expanded="false">
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Data Transaksi</span>
                         </a>
                     </li>
                     @endif
-                    @if (Auth::user()->role === 'admin')
+                    @if (Auth::user()->isAdmin())
                     <li>
                         <a href="#" aria-expanded="false">
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Data Laporan</span>
