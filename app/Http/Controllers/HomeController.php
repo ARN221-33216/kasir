@@ -33,6 +33,7 @@ class HomeController extends Controller
             'title' => 'Home Page',
             'data_barang_cnt' => Barang::count(),
             'data_transaksi_cnt' => Transaksi::count(),
+            'data_transaksi_hari_ini' => Transaksi::where('tgl_transaksi', $today)->count(),
             'data_pendapatan_hari_ini' =>  Transaksi::where('tgl_transaksi', $today)->sum('total_bayar'),
             'data_seluruh_pendapatan' => Transaksi::sum('total_bayar'),
             'data_barang' => Barang::join('tbl_jenis_barang', 'tbl_jenis_barang.id', '=', 'tbl_barang.id_jenis')

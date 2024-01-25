@@ -15,7 +15,7 @@
                             <a href="/transaksi/create" class="btn btn-primary btn-round ml-auto">
                                 <i class="fa fa-plus">
                                 </i>Tambah Data
-                                </a>
+                            </a>
                         </div>
                     </div>
 
@@ -46,7 +46,12 @@
                                         <td>Rp. {{ number_format($row->total_bayar) }}</td>
                                         <td>
                                             <a href="/transaksi/detail/{{$row->no_transaksi}}" class="btn btn-xs btn-success"><i class="fa fa-list"></i>Detail</a>
-                                            <a href="#" target="_blank" class="btn btn-xs btn-primary"><i class="fa fa-print"></i>Cetak</a>
+                                            <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown"><i class="fa fa-print"></i>Cetak</button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="#">Cetak Faktur</a>
+                                                <a class="dropdown-item" href="#">Cetak Invoice</a>
+                                            </div>
+
                                         </td>
 
                                     </tr>

@@ -7,6 +7,7 @@
 
     <div class="container-fluid">
         <div class="row">
+            @if (auth()->user()->isAdmin())
             <div class="col-4">
                 <div class="card card-widget">
                     <div class="card-body gradient-3">
@@ -20,6 +21,21 @@
                     </div>
                 </div>
             </div>
+            @else
+            <div class="col-4">
+                <div class="card card-widget">
+                    <div class="card-body gradient-3">
+                        <div class="media">
+                            <span class="card-widget__icon"><i class="fa fa-desktop"></i></span>
+                            <div class="media-body">
+                                <h2 class="card-widget__title">{{ $data_transaksi_hari_ini }}</h2>
+                                <h5 class="card-widget__subtitle">Transaksi Hari Ini</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endif
             <div class="col-4">
                 <div class="card card-widget">
                     <div class="card-body gradient-4">
