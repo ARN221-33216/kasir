@@ -1,8 +1,7 @@
 @extends('layout.layout')
 @section('content')
 <div class="content-body">
-
-    @include('layout.partials.navbar')
+ 
     <!-- row -->
 
     <div class="container-fluid">
@@ -48,7 +47,7 @@
                                             <a href="/transaksi/detail/{{$row->no_transaksi}}" class="btn btn-xs btn-success"><i class="fa fa-list"></i>Detail</a>
                                             <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown"><i class="fa fa-print"></i>Cetak</button>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">Cetak Faktur</a>
+                                                <a class="dropdown-item" href="/transaksi/cetakfaktur/{{$row->no_transaksi}}">Cetak Faktur</a>
                                                 <a class="dropdown-item" href="#">Cetak Invoice</a>
                                             </div>
 

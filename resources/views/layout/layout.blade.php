@@ -130,7 +130,7 @@
                     @if (!Auth::user()->isAdmin())
                     <li>
                         <a href="/transaksi" aria-expanded="false">
-                            <i class="icon-speedometer menu-icon"></i><span class="nav-text">Data Transaksi</span>
+                            <i class="fa fa-desktop"></i><span class="nav-text">Data Transaksi</span>
                         </a>
                     </li>
                     @endif
