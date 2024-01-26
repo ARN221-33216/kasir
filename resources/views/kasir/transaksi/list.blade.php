@@ -48,7 +48,7 @@
                                             <button type="button" class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown"><i class="fa fa-print"></i>Cetak</button>
                                             <div class="dropdown-menu">
                                                 <a class="dropdown-item" href="/transaksi/cetakfaktur/{{$row->no_transaksi}}">Cetak Faktur</a>
-                                                <a class="dropdown-item" href="#">Cetak Invoice</a>
+                                                <a class="dropdown-item" href="/transaksi/cetakinvoice/{{$row->no_transaksi}}">Cetak Invoice</a>
                                             </div>
 
                                         </td>

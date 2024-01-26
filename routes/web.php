@@ -50,4 +50,6 @@ Route::middleware('role:kasir')->group(function () {
     Route::get('/transaksi/create', [TransaksiController::class, 'create']);
     Route::get('/transaksi/detail/{no_transaksi}', [TransaksiController::class, 'detail']);
     Route::get('/transaksi/cetakfaktur/{no_transaksi}', [TransaksiController::class, 'cetakfaktur']);
+    Route::get('/transaksi/cetakinvoice/{no_transaksi}', [TransaksiController::class, 'cetakinvoice']);
+
 });

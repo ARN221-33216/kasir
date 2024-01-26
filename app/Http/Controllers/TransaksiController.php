@@ -55,4 +55,18 @@ class TransaksiController extends Controller
 
         return view('kasir.transaksi.cetakfaktur', $data);
     }
+
+    public function cetakinvoice(Request $request, $no_transaksi)
+    {
+        $data = [
+            'data_transaksi' => Transaksi::where('no_transaksi', $no_transaksi)->first(),
+            'data_detail' => DetailTransaksi::join('tbl_barang', 'tbl_barang.id', '=', 'tbl_detail_transaksi.id_barang')
+                ->select('tbl_barang.*', 'tbl_detail_transaksi.*')
+                ->where('no_transaksi', $no_transaksi)
+                ->get()
+        ];
+ 
+
+        return view('kasir.transaksi.cetakinvoice', $data);
+    }
 }

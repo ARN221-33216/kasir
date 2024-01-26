@@ -15,6 +15,9 @@ class Role
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
+        if (!$request->user()){
+            return redirect()->route('logout');
+        }
         if (!in_array($request->user()->role, $roles)) {
             return redirect()->route('logout');
         }
