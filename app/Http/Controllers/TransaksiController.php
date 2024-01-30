@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Transaksi;
 use App\Models\DetailTransaksi;
+use App\Models\Barang;
+use App\Models\Cart;
+use Session;
 
 class TransaksiController extends Controller
 {
@@ -18,16 +21,24 @@ class TransaksiController extends Controller
         return view('kasir.transaksi.list', $data);
     }
 
-    public function create(Request $request)
+    public function create()
     {
+        $cart = new Cart(Session::get('cart'));
+        $id = Transaksi::max('id');
+        $no_transaksi = "NT-" . str_pad(++$id, 3, '0', STR_PAD_LEFT);
+
         $data = [
-            'title' => 'Create Data Transaksi'
+            'title' => 'Create Data Transaksi',
+            'data_barang' => Barang::all(),
+            'cart' => $cart,
+            'no_transaksi' => $no_transaksi
         ];
+
 
         return view('kasir.transaksi.add', $data);
     }
 
-    public function detail(Request $request, $no_transaksi)
+    public function detail($no_transaksi)
     {
         $data = [
             'title' => 'Detail Data Transaksi',
@@ -37,12 +48,12 @@ class TransaksiController extends Controller
                 ->where('no_transaksi', $no_transaksi)
                 ->get()
         ];
- 
-    
+
+
         return view('kasir.transaksi.detail', $data);
     }
 
-    public function cetakfaktur(Request $request, $no_transaksi)
+    public function cetakfaktur($no_transaksi)
     {
         $data = [
             'data_transaksi' => Transaksi::where('no_transaksi', $no_transaksi)->first(),
@@ -51,12 +62,12 @@ class TransaksiController extends Controller
                 ->where('no_transaksi', $no_transaksi)
                 ->get()
         ];
- 
+
 
         return view('kasir.transaksi.cetakfaktur', $data);
     }
 
-    public function cetakinvoice(Request $request, $no_transaksi)
+    public function cetakinvoice($no_transaksi)
     {
         $data = [
             'data_transaksi' => Transaksi::where('no_transaksi', $no_transaksi)->first(),
@@ -65,8 +76,82 @@ class TransaksiController extends Controller
                 ->where('no_transaksi', $no_transaksi)
                 ->get()
         ];
- 
+
 
         return view('kasir.transaksi.cetakinvoice', $data);
+    }
+
+    public function detailbarang($id_barang)
+    {
+        $data = array(
+            'detail_barang' => Barang::where('id', $id_barang)->get(),
+        );
+
+        return view('kasir/transaksi/detailbarang', $data);
+    }
+
+    public function cart(Request $request)
+    {
+
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+        $barang = Barang::find($request->id_barang);
+
+        if ($request->qty > $barang->stok) {
+            return redirect('/transaksi/create')->with(
+                'error',
+                'QTY lebih dari stok',
+            );
+        }
+        $cart->add($barang, $request->qty);
+
+
+        Session::put('cart', $cart);
+
+        return redirect('/transaksi/create')->with('success', 'Data Berhasil Ditambahkan');
+    }
+
+    public function remove($id_barang)
+    {
+
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+
+        $cart->remove($id_barang);
+
+        Session::put('cart', $cart);
+
+        return redirect('/transaksi/create')->with('success', 'Data Berhasil Dihapus');
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            $cart = new Cart(Session::get('cart'));
+
+            $transaksi = Transaksi::create([
+                'no_transaksi'  => $request->no_transaksi,
+                'tgl_transaksi' => date('Y-m-d'),
+                'diskon'        => $cart->diskon,
+                'uang_pembeli'  => $request->uang_pembeli,
+                'total_bayar'   => $cart->total_bayar,
+                'kembalian'     => $request->kembalian,
+            ]);
+
+            $details = [];
+            foreach ($cart->items as $id_barang => $item) {
+                $details[] = [
+                    'id_barang' => $id_barang,
+                    'qty' => $item['qty'],
+                ];
+            }
+            $transaksi->details()->createMany($details);
+
+            return redirect('/transaksi')->with('success', 'Data Berhasil Disimpan');
+        } catch (\Exception $e) {
+            return redirect('/transaksi')->with('error', $e->getMessage());
+        } finally {
+            Session::forget('cart');
+        }
     }
 }

@@ -14,6 +14,8 @@
 
     <link href="/asset/css/style.css" rel="stylesheet">
 
+    @stack('css')
+
 </head>
 
 <body>
@@ -83,8 +85,10 @@
                                         <li>
                                             <a href="/profile"><i class="icon-user"></i> <span>Profile</span></a>
                                         </li>
+                                        
+                                        <li>
                                         <hr class="my-2">
-                                        <li><a href="{{route('logout')}}"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                        <a href="{{route('logout')}}"><i class="icon-key"></i> <span>Logout</span></a></li>
                                     </ul>
                                 </div>
                             </div>

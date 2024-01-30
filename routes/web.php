@@ -51,5 +51,10 @@ Route::middleware('role:kasir')->group(function () {
     Route::get('/transaksi/detail/{no_transaksi}', [TransaksiController::class, 'detail']);
     Route::get('/transaksi/cetakfaktur/{no_transaksi}', [TransaksiController::class, 'cetakfaktur']);
     Route::get('/transaksi/cetakinvoice/{no_transaksi}', [TransaksiController::class, 'cetakinvoice']);
+    Route::get('/transaksi/detailbarang/{id_barang}', [TransaksiController::class, 'detailbarang']);
+    Route::post('/transaksi/cart', [TransaksiController::class, 'cart']);
+    Route::post('/transaksi/store', [TransaksiController::class, 'store']);
+    Route::get('/transaksi/remove/{id_barang}', [TransaksiController::class, 'remove']);
+
 
 });

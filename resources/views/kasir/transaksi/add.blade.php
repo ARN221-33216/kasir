@@ -1,4 +1,16 @@
 @extends('layout.layout')
+@push('css')
+<style>
+    .txt-right {
+        float: right;
+    }
+
+    .five-percent-width {
+        width: 5%;
+    }
+
+</style>
+@endpush
 @section('content')
 <div class="content-body">
 
@@ -27,21 +39,36 @@
                                         <th>Harga</th>
                                         <th>Qty</th>
                                         <th>Subtotal</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    @php
+                                    $no = 1;
+                                    @endphp
+                                    @foreach($cart->items as $id_barang => $barang)
+                                    <tr>
+                                        <td class="five-percent-width">{{ $no++ }}.</td>
+                                        <td>{{ $barang['nama_barang'] }}</td>
+                                        <td>Rp. <span class="txt-right">{{ number_format($barang['harga']) }}</span></td>
+                                        <td class="five-percent-width">{{ $barang['qty'] }}</td>
+                                        <td>Rp. <span class="txt-right">{{ number_format($barang['subtotal']) }}</span></td>
+                                        <td class="five-percent-width"><a href="/transaksi/remove/{{$id_barang}}" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i>Hapus</a></td>
+                                    </tr>
+                                    @endforeach
+
+                                    <tr>
+                                        <td colspan="4">Total </td>
+                                        <td>Rp. <span class="txt-right">{{ number_format($cart->total)}}</span></td>
+                                        <td></td>
                                     </tr>
                                     <tr>
-                                        <td>No</td>
-                                        <td>Barang</td>
-                                        <td>Harga</td>
-                                        <td>Qty</td>
-                                        <td>Subtotal</td>
+                                        <td colspan="4">Diskon</td>
+                                        <td>Rp. <span class="txt-right">{{ number_format($cart->total_diskon)}}</span></td>
+                                        <td></td>
                                     </tr>
                                     <tr>
-                                        <th colspan="4">Diskon</th>
-                                        <th>Diskon</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="4">Total Bayar</th>
-                                        <th>Total Bayar</th>
+                                        <td colspan="4">Total Bayar</td>
+                                        <td>Rp. <span class="txt-right" id="total_bayar">{{ number_format($cart->total_bayar)}}</span></td>
+                                        <td></td>
                                     </tr>
                                 </table>
                                 <hr>
@@ -50,7 +77,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label> No Transaksi</label>
-                                            <input type="text" class="form-control" name="no_transaksi" value="NO-001" readonly required>
+                                            <input type="text" class="form-control" name="no_transaksi" value="{{$no_transaksi}}" readonly required>
                                         </div>
                                         <div class="form-group">
                                             <label> Tgl Transaksi</label>
@@ -60,11 +87,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Uang Pembeli</label>
-                                            <input type="text" class="form-control" name="uang_pembeli" value="" required>
+                                            <input type="text" class="form-control" name="uang_pembeli" id="uang_pembeli" onkeyup="hitungKembalian()" value="" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Kembalian</label>
-                                            <input type="text" class="form-control" value="" readonly required>
+                                            <input type="text" class="form-control" value="" id="kembalian" name="kembalian" readonly required>
                                         </div>
                                     </div>
                                 </div>
@@ -73,6 +100,7 @@
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i>Save Changes</button>
                                 <a href="/transaksi" class="btn btn-danger"><i class="fa fa-undo"></i>Cancel</a>
                             </div>
+                        </div>
                     </form>
 
                 </div>
@@ -84,7 +112,7 @@
 
 
 <div class="modal fade" id="modalCreate" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Create {{$title}}</h5>
@@ -98,8 +126,12 @@
 
                     <div class="form-group">
                         <label>Jenis Barang</label>
-                        <select name="id_barang" class="form-control" required>
+                        <select name="id_barang" id="id_barang" class="form-control" required>
                             <option value="" hidden>--Pilih Nama Barang--</option>
+                            @foreach($data_barang as $val)
+
+                            <option value="{{$val->id}}">{{$val->nama_barang}}</option>
+                            @endforeach
 
                         </select>
                     </div>
@@ -118,5 +150,48 @@
         </div>
     </div>
 </div>
-
 @endsection
+
+@push('script')
+<script>
+    $(document).ready(function() {
+        $('form').submit(function() {
+            $('input[type="text"]').each(function() {
+                $(this).val($(this).val().replace(/,/g, '')); // Remove commas
+            });
+        });
+
+        $("#id_barang").change(function() {
+            var id_barang = $("#id_barang").val();
+            $.ajax({
+                url: "/transaksi/detailbarang/" + id_barang
+                , type: "GET"
+                , dataType: "html"
+                , success: function(data) {
+                    $('#tampil_barang').html(data);
+                }
+                , error: function(jqXHR, textStatus, errorThrown) {
+                    console.error("AJAX error:", textStatus, errorThrown);
+
+                }
+            });
+        });
+    });
+
+
+    function hitungKembalian() {
+        var total_bayar = $("#total_bayar").text().replace(/,/g, "");
+        var uang_pembeli = $("#uang_pembeli").val();
+
+        var kembalian = parseInt(uang_pembeli) - parseInt(total_bayar);
+
+        if (kembalian > 0) {
+            $("#kembalian").val(kembalian.toLocaleString());
+        } else {
+            $("#kembalian").val(0);
+        }
+    }
+
+</script>
+
+@endpush
