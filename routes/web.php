@@ -42,6 +42,10 @@ Route::middleware('role:admin')->group(function () {
     //setting diskon
     Route::get('/setdiskon', [DiskonController::class, 'index']);
     Route::post('/setdiskon/update/{id}', [DiskonController::class, 'update']);
+
+    //Data Laporan
+    Route::get('/laporan', [TransaksiController::class, 'laporan']);
+    Route::post('/laporan/cetak', [TransaksiController::class, 'laporancetak']);
 });
 
 Route::middleware('role:kasir')->group(function () {
@@ -55,6 +59,4 @@ Route::middleware('role:kasir')->group(function () {
     Route::post('/transaksi/cart', [TransaksiController::class, 'cart']);
     Route::post('/transaksi/store', [TransaksiController::class, 'store']);
     Route::get('/transaksi/remove/{id_barang}', [TransaksiController::class, 'remove']);
-
-
 });

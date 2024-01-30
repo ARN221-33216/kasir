@@ -11,6 +11,9 @@
     <!-- Custom Stylesheet -->
     <link href="/asset/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="/asset/plugins/sweetalert/css/sweetalert.css" rel="stylesheet">
+    
+    <!-- Date picker plugins css -->
+    <link href="/asset/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet">
 
     <link href="/asset/css/style.css" rel="stylesheet">
 
@@ -45,7 +48,7 @@
         ***********************************-->
         <div class="nav-header">
             <div class="brand-logo">
-                <a href="index.html">
+                <a href="/home">
                     <b class="logo-abbr"><img src="/asset/images/logo.png" alt=""> </b>
                     <span class="logo-compact"><img src="/asset/images/logo-compact.png" alt=""></span>
                     <span class="brand-title-text">
@@ -140,7 +143,7 @@
                     @endif
                     @if (Auth::user()->isAdmin())
                     <li>
-                        <a href="#" aria-expanded="false">
+                        <a href="/laporan" aria-expanded="false">
                             <i class="icon-speedometer menu-icon"></i><span class="nav-text">Data Laporan</span>
                         </a>
                     </li>
@@ -187,6 +190,8 @@
     <script src="/asset/plugins/sweetalert/js/sweetalert.min.js"></script>
     <script src="/asset/plugins/sweetalert/js/sweetalert.init.js"></script>
 
+    <!-- Date Picker Plugin JavaScript -->
+    <script src="/asset/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
 
     @if (session('success'))
     <script>

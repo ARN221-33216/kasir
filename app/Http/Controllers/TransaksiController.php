@@ -158,4 +158,31 @@ class TransaksiController extends Controller
             Session::forget('cart');
         }
     }
+
+    public function laporan()
+    {
+        $data = [
+            'title' => 'Data Laporan',
+            'data_transaksi' => Transaksi::all()
+        ];
+
+        return view('admin.laporan.transaksi.list', $data);
+    }
+
+    public function laporancetak(Request $request)
+    {
+
+        $date1 = \DateTime::createFromFormat("d/m/Y", $request->date1);
+        $newDate1 = $date1->format("Y-m-d");
+        
+        $date2 = \DateTime::createFromFormat("d/m/Y", $request->date2);
+        $newDate2 = $date2->format("Y-m-d");
+ 
+        $data = [
+            'title' => 'Cetak Laporan',
+            'data_transaksi' => Transaksi::whereBetween('tgl_transaksi', [$newDate1, $newDate2])->get()
+        ];
+ 
+        return view('admin.laporan.transaksi.cetak', $data);
+    }
 }
