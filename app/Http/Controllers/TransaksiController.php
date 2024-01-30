@@ -144,6 +144,10 @@ class TransaksiController extends Controller
                     'id_barang' => $id_barang,
                     'qty' => $item['qty'],
                 ];
+
+                $barang = Barang::find($id_barang);
+                $barang->stok -= $item['qty'];
+                $barang->save();
             }
             $transaksi->details()->createMany($details);
 
